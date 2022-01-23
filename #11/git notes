@@ -1,0 +1,19 @@
+git init - создать git репазиторий
+
+git add hello.html - добавить определеныый файл
+git add . 		   - добавить весь репащиторий
+
+git commit -m "First Commit" - сделать коммит, елси опустить -m, то введет в текстовый редактор
+
+
+git status - проверка статуса
+
+git log - вывести все логи
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short - вывести логи по другому
+
+
+git branch -M main - хз, нужно перед отправкой на github
+git remote add origin <ссылка на github> - говорит, куда отпроавить файлы
+git push -u origin main - отправка файлов
+
+git remote rm origin - удалить путь к репазиторию на github
