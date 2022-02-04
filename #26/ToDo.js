@@ -50,7 +50,7 @@ function deleteTask(name){
     }
 }
 
-function showList(statusOrPriority){
+function showBy(statusOrPriority){
     if (statusOrPriority === 'status'){
         const tasks = {
             [STATUS.TO_DO]: "",
@@ -104,5 +104,5 @@ changeStatus('f2', STATUS.IN_PROGRESS);
 changePriority('fo22[g2', PRIORITY.LOW);
 deleteTask('test');
 
-showList('status');
-showList('priority');
+showBy('status');
+showBy('priority');
