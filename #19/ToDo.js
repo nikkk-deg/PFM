@@ -12,9 +12,9 @@ const list = {
     "write a post": "ToDo",
 }
 
-function changeStatus(name, status){//name is better then key
+function changeStatus(name, status){
     if (name in list){
-        list[name] = status;
+        list[status] = status;
     }
 }
 
