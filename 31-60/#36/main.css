@@ -1,0 +1,87 @@
+@font-face{
+    font-family: "Work Sans";
+    src: url("Work_Sans/static/WorkSans-Light.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
+#calculator{
+    position: relative;
+    width: 364px;
+    height: 582px;
+    background: #17171C;
+}
+
+#numbers{
+    position: static;
+    width: 324px;
+    height: 96px;
+    margin: 16px 20px;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 96px;
+    text-align: right;
+    color: #FFFFFF;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 324px;
+    height: 72px;
+    margin: 16px 20px;
+}
+
+.blueButton{
+    width: 69px;
+    height: 72px;
+    left: 255px;
+    background: #4B5EFC;
+    border-radius: 24px;
+    flex: none;
+}
+
+.greyButton{
+    width: 69px;
+    height: 72px;
+    left: 170px;
+    background: #2E2F38;
+    border-radius: 24px;
+    flex: none;
+    margin-right: 16px;
+}
+
+#cButton{
+    width: 153px;
+    height: 72px;
+    background: #4E505F;
+    border-radius: 24px;
+    flex: none;
+    margin-right: 16px;
+}
+
+#zero{
+    width: 238px;
+    height: 72px;
+    background: #2E2F38;
+    border-radius: 24px;
+    flex: none;
+    margin-right: 16px;
+}
+
+.text{
+    text-align: center;
+    margin-top: 16px;
+    font-family: Work Sans;
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+img#delete{
+    height: 32px;
+    width: 32px;
+    margin: 20px 0 0 19px;
+}
