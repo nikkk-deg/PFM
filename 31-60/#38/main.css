@@ -13,7 +13,7 @@
 
 #numbers{
     width: 324px;
-    height: 96px;
+    height: 94px;
     margin: 16px 20px;
     font-family: Work Sans;
     font-style: normal;
@@ -83,3 +83,6 @@ img#delete{
     width: 32px;
     margin: 20px 0 0 19px;
 }
+ #deleteButton{
+     font-size: 0;
+ }

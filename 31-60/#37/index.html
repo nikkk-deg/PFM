@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Обработчики событий</title>
+    <style>
+        p#sweetInscription{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="Нажмите, чтобы спрятать текст" id="button">
+<div id="text">Текст</div>
+
+<input type="button" value="Нажмите, чтобы спрятать кнопку" id="hiddenButton">
+<div id="sweets">
+    <p id="sweetInscription">Сладости (нажми меня)!</p>
+<ul id="listOfSweets">
+    <li>Пирожное</li>
+    <li>Пончик</li>
+    <li>Мёд</li>
+</ul>
+</div>
+
+<script>
+    let text = document.getElementById('text');
+    let button = document.getElementById('button');
+    button.onclick = () => {
+        text.innerHTML = null;
+    };
+
+    hiddenButton = document.getElementById('hiddenButton');
+    hiddenButton.onclick = () => hiddenButton.hidden = true;
+
+    let sweetInscription = document.getElementById('sweetInscription');
+    let listOfSweets = document.getElementById('listOfSweets');
+
+    function handlerSweet(){
+        if (listOfSweets.hidden === true){
+            listOfSweets.hidden = false;
+        }else{
+            listOfSweets.hidden = true;
+        }
+    }
+    sweetInscription.addEventListener("click", handlerSweet);
+</script>
+
+
+</body>
+</html>
