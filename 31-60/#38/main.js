@@ -1,5 +1,8 @@
-const buttons = document.querySelectorAll('.button');
-const numberBar = document.getElementById('numbers');
+const cssSelectorOfButtons = '.button';
+const cssSelectorOfNumbers = 'numbers';
+
+const buttons = document.querySelectorAll(cssSelectorOfButtons);
+const numberBar = document.getElementById(cssSelectorOfNumbers);
 
 const BUTTONS = {
     SUM: '+',
@@ -93,16 +96,27 @@ function deleteLastSymbol(){
     numberBar.textContent = numberBar.textContent.slice(0,this.length - 1);
 }
 
-function checkRepeatAction(){
+function checkSymbolInBUTTONS(symbol){
+    return symbol === BUTTONS.SUM || symbol === BUTTONS.DIVISION || symbol === BUTTONS.DIFFERENCE || symbol === BUTTONS.MULTIPLICATION;
+}
+
+function checkRepeatLastAction(){
     let lastSymbol = numberBar.textContent.charAt(numberBar.textContent.length - 1)
-    let actionIsRepeat = lastSymbol === BUTTONS.SUM || lastSymbol === BUTTONS.DIVISION || lastSymbol === BUTTONS.DIFFERENCE || lastSymbol === BUTTONS.MULTIPLICATION;
-    if (actionIsRepeat){
+    if (checkSymbolInBUTTONS(lastSymbol)){
         return true;
     }
 }
 
+function checkIfActionAlreadyWasInNumberBar(){
+    for (let buttonsKey in BUTTONS) {
+        if (numberBar.textContent.includes(BUTTONS[buttonsKey])){
+            showResultOfCalculation(numberBar.textContent);
+        }
+    }
+}
+
 function deleteRepeatAction(){
-    if(checkRepeatAction()){
+    if(checkRepeatLastAction()){
         numberBar.innerHTML = numberBar.innerHTML.slice(0,-1);
     }
 }
@@ -110,17 +124,19 @@ function deleteRepeatAction(){
 for (let button of buttons) {
     button.addEventListener('click',() => {
 
-        let itsCButton = button.textContent === BUTTONS.C_BUTTON;
-        let itsNumber = button.textContent in BUTTONS.NUMBERS;
-        let itsAction = button.textContent === BUTTONS.SUM || button.textContent === BUTTONS.DIVISION || button.textContent === BUTTONS.DIFFERENCE || button.textContent === BUTTONS.MULTIPLICATION;
-        let itsDeleteButton = button.textContent === BUTTONS.DELETE_LAST_SYMBOL;
-        let itsEqual = button.textContent === BUTTONS.EQUAL;
+        let symbol = button.textContent;
+        let itsCButton = symbol === BUTTONS.C_BUTTON;
+        let itsNumber = symbol in BUTTONS.NUMBERS;
+        let itsAction = checkSymbolInBUTTONS(symbol);
+        let itsDeleteButton = symbol === BUTTONS.DELETE_LAST_SYMBOL;
+        let itsEqual = symbol === BUTTONS.EQUAL;
 
         if (itsNumber){
             printSymbolInNumberBur(button);
         }
         else if(itsAction){
             deleteRepeatAction();
+            checkIfActionAlreadyWasInNumberBar();
             printSymbolInNumberBur(button);
         }
         else if (itsDeleteButton){
