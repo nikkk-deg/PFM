@@ -1,53 +1,54 @@
-let buttons = document.querySelectorAll('.button');
-let numberBar = document.getElementById('numbers');
+const buttons = document.querySelectorAll('.button');
+const numberBar = document.getElementById('numbers');
 
-const ACTION = {
+const BUTTONS = {
     SUM: '+',
     DIFFERENCE: '-',
     MULTIPLICATION: '×',
     DIVISION: '÷',
     EQUAL: '=',
     DELETE_LAST_SYMBOL: 'delete',
+    NUMBERS: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    C_BUTTON: 'C',
 }
 
-
-function checkActionInNumberBur(str){
-   return str.includes(ACTION.SUM) || str.includes(ACTION.MULTIPLICATION) || str.includes(ACTION.DIFFERENCE) || str.includes(ACTION.DIVISION);
+const ACTION = {
+    GET_NUMBERS(){
+        this.FIRST_NUMBER = getNums(numberBar.textContent).firstNum;
+        this.SECOND_NUMBER = getNums(numberBar.textContent).secondNum;
+    },
+    SUM(){
+        numberBar.innerHTML = String(this.FIRST_NUMBER + this.SECOND_NUMBER);
+    },
+    DIFFERENCE(){
+    numberBar.innerHTML = String(this.FIRST_NUMBER - this.SECOND_NUMBER);
+    },
+    MULTIPLICATION(){
+        numberBar.innerHTML = String(this.FIRST_NUMBER * this.SECOND_NUMBER)
+    },
+    DIVISION(){
+        alert(`Result = ${this.FIRST_NUMBER / this.SECOND_NUMBER}!\nBut it has rounded in number bar.`)
+        numberBar.innerHTML = String(Math.round(this.FIRST_NUMBER / this.SECOND_NUMBER))
+    },
 }
 
-function whatTheActionInNumberBar(str){
-    if (checkActionInNumberBur(str)){
-        for (let strElement of str) {
-            if (isNaN(Number(strElement))){
-                for (let objElement in ACTION) {
-                    if (ACTION[objElement] === strElement){
-                        return ACTION[objElement];
-                    }
-                }
-            }
+const FONT_SIZE = {
+    SMALL: 'font-size: 35px',
+    MEDIUM: 'font-size: 50px',
+    NORMAL: 'font-size: 96px',
+}
+
+function checkActionInNumberBar(str){
+    for (let operationKey in BUTTONS) {
+        if (str.includes(BUTTONS[operationKey])) {
+            return operationKey;
         }
     }
 }
 
-function showResultOfCalculation(str, a, b){
-    let action = whatTheActionInNumberBar(str);
-    switch (action){
-        case ACTION.SUM:
-            numberBar.innerHTML = String(a + b);
-            break;
-        case ACTION.DIVISION:
-            alert('Rounded to the nearest integer');
-            numberBar.innerHTML = String(Math.round(b / a));
-            break;
-        case ACTION.DIFFERENCE:
-            numberBar.innerHTML = String(b - a);
-            break;
-        case ACTION.MULTIPLICATION:
-            numberBar.innerHTML = String(a * b);
-            break;
-        default:
-            break;
-    }
+function showResultOfCalculation(str) {
+    ACTION.GET_NUMBERS();
+    ACTION[checkActionInNumberBar(str)]();
 }
 
 function getNums(arr){
@@ -56,11 +57,11 @@ function getNums(arr){
     let secondNum = '';
     for (let element of arr){
         if (!(isNaN(Number(element)))){
-            firstNum += element
+            secondNum += element
         }
         else if (isNaN(Number(element))){
-            secondNum = firstNum;
-            firstNum = '';
+            firstNum = secondNum;
+            secondNum = '';
         }
     }
     firstNum = Number(firstNum);
@@ -68,18 +69,35 @@ function getNums(arr){
     return {firstNum: firstNum, secondNum: secondNum};
 }
 
+function printSymbolInNumberBur(button){
+    let lengthOfNumberBar = numberBar.textContent.length;
+    let validInput = (!(lengthOfNumberBar === 0 && isNaN(Number(button.textContent))) && lengthOfNumberBar < 13);
+
+    if (validInput){
+        numberBar.textContent += button.textContent;
+        if (lengthOfNumberBar > 8){
+            numberBar.style = FONT_SIZE.SMALL;
+        }
+        else if (lengthOfNumberBar > 4){
+            numberBar.style = FONT_SIZE.MEDIUM;
+        }
+        else{
+            numberBar.style = FONT_SIZE.NORMAL;
+        }
+    }else{
+        alert("It's too long!");
+    }
+}
+
+function deleteLastSymbol(){
+    numberBar.textContent = numberBar.textContent.slice(0,this.length - 1);
+}
+
 function checkRepeatAction(){
-    switch (numberBar.textContent.charAt(numberBar.textContent.length - 1)){
-        case ACTION.SUM:
-            return true;
-        case ACTION.MULTIPLICATION:
-            return true;
-        case ACTION.DIFFERENCE:
-            return true;
-        case ACTION.DIVISION:
-            return true;
-        default:
-            break;
+    let lastSymbol = numberBar.textContent.charAt(numberBar.textContent.length - 1)
+    let actionIsRepeat = lastSymbol === BUTTONS.SUM || lastSymbol === BUTTONS.DIVISION || lastSymbol === BUTTONS.DIFFERENCE || lastSymbol === BUTTONS.MULTIPLICATION;
+    if (actionIsRepeat){
+        return true;
     }
 }
 
@@ -89,74 +107,30 @@ function deleteRepeatAction(){
     }
 }
 
-function makeCalculation(){
-    deleteRepeatAction();
-    let firstNumber = getNums(numberBar.textContent).firstNum;
-    let secondNumber = getNums(numberBar.textContent).secondNum;
-    showResultOfCalculation(numberBar.textContent, firstNumber,secondNumber);
-}
-
-function printSymbolInNumberBur(button){
-    if (numberBar.textContent.length > 6){
-        alert('Number is too long!');
-    }
-    else{
-        if (!(numberBar.textContent.length === 0 && isNaN(Number(button.textContent)))){
-            numberBar.innerHTML += button.textContent;
-        }
-    }
-}
-
-function deleteLastSymbol(){
-    numberBar.innerHTML = numberBar.textContent.slice(0,this.length - 1);
-}
-
-
-
 for (let button of buttons) {
     button.addEventListener('click',() => {
-        switch (button.textContent){
-            case 'C':
-                numberBar.innerHTML = null;
-                break;
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            case '0':
-                printSymbolInNumberBur(button);
-                break;
-            case ACTION.DIVISION:
-                makeCalculation();
-                printSymbolInNumberBur(button);
-                break;
-            case ACTION.MULTIPLICATION:
-                makeCalculation();
-                printSymbolInNumberBur(button);
-                break;
-            case ACTION.DIFFERENCE:
-                makeCalculation();
-                printSymbolInNumberBur(button);
-                break;
-            case ACTION.SUM:
-                makeCalculation();
-                printSymbolInNumberBur(button);
-                break;
-            case ACTION.EQUAL:
-               showResultOfCalculation(numberBar.textContent, getNums(numberBar.textContent).firstNum, getNums(numberBar.textContent).secondNum);
-                break;
-            case ACTION.DELETE_LAST_SYMBOL:
-                deleteLastSymbol();
-                break;
 
-            default:
-                break;
+        let itsCButton = button.textContent === BUTTONS.C_BUTTON;
+        let itsNumber = button.textContent in BUTTONS.NUMBERS;
+        let itsAction = button.textContent === BUTTONS.SUM || button.textContent === BUTTONS.DIVISION || button.textContent === BUTTONS.DIFFERENCE || button.textContent === BUTTONS.MULTIPLICATION;
+        let itsDeleteButton = button.textContent === BUTTONS.DELETE_LAST_SYMBOL;
+        let itsEqual = button.textContent === BUTTONS.EQUAL;
+
+        if (itsNumber){
+            printSymbolInNumberBur(button);
+        }
+        else if(itsAction){
+            deleteRepeatAction();
+            printSymbolInNumberBur(button);
+        }
+        else if (itsDeleteButton){
+            deleteLastSymbol();
+        }
+        else if (itsEqual){
+            showResultOfCalculation(numberBar.textContent);
+        }
+        else if (itsCButton){
+            numberBar.textContent = null;
         }
     });
 }
-
