@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .newCheckBox{
+            display: none;
+        }
+
+        input[type=checkbox] + label
+        {
+            cursor: pointer;
+            margin-left: 100px;
+            background: url("images/checkbox_off.png") no-repeat;
+            position: absolute;
+            height: 21px;
+            width: 21px;
+        }
+        input[type=checkbox]:checked + label
+        {
+            background: url("images/checkbox_on.png") no-repeat;
+        }
+        div{
+            margin: 100px 500px 0 0;
+        }
+    </style>
+</head>
+<body>
+</body>
+<script>
+    let div = document.createElement('div');
+    let checkboxCount = 0;
+
+    for (let i=0; i<10; i++){
+        let checkBox = document.createElement("input");
+        let customCheckBox = document.createElement('label');
+
+        checkBox.type = 'checkbox';
+        checkBox.className = 'newCheckBox';
+        checkBox.setAttribute('id', `checkbox${checkboxCount}`);
+
+        customCheckBox.setAttribute('for', `checkbox${checkboxCount}`);
+        checkboxCount++;
+
+        customCheckBox.style = `margin-top: ${i*25}px`
+
+        div.append(checkBox);
+        div.append(customCheckBox);
+    }
+    document.body.append(div);
+</script>
+</html>

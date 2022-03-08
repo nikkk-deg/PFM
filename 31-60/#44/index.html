@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TO DO</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="main_content">
+
+        <div class="article_of_form">HIGH</div>
+        <form class="form_add_task" id="high_form" onsubmit="return false">
+            <input id="high_input_field" class="input_field" maxlength="120" type="text" aria-valuemax="36" placeholder="Добавить важных дел">
+            <input class="add_button" id="high_add_button" type="image" src="images/plus_icon.png">
+
+        </form>
+
+        <div class="article_of_form">LOW</div>
+        <form class="form_add_task" id="low_form" onsubmit="return false">
+            <input id="low_input_field" class="input_field" maxlength="120" type="text" placeholder="Добавить">
+            <input class="add_button" id="low_add_button" type="image" src="images/plus_icon.png">
+        </form>
+    </div>
+    <script src="view.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
